@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "dyCopy 主页入队",
+  "version": "0.1.0",
+  "description": "抖音主页一键/批量加入 dyCopy 本机下载队列(需先启动 dycopy_service)",
+  "permissions": ["activeTab", "scripting", "alarms", "storage"],
+  "host_permissions": ["http://127.0.0.1:8788/*", "https://www.douyin.com/*"],
+  "background": { "service_worker": "background.js" },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "dyCopy 主页入队"
+  }
+}

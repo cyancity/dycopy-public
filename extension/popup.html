@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>dyCopy 主页入队</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header>
+    <h1>dyCopy 主页入队</h1>
+    <span id="service-dot" class="dot off" title="服务连接状态"></span>
+  </header>
+
+  <!-- 服务未启动提示 -->
+  <section id="offline-box" class="box warn" hidden>
+    <p><strong>本机服务未启动。</strong>扩展需要 dyCopy 服务在后台运行才能入队。</p>
+    <p>在 dycopy 安装目录打开终端并运行:</p>
+    <pre id="start-cmd"></pre>
+    <button id="btn-reconnect">重新连接</button>
+  </section>
+
+  <!-- 当前主页 -->
+  <section id="profile-box" class="box" hidden>
+    <h2>当前主页</h2>
+    <div id="not-profile" class="muted" hidden>当前标签页不是抖音主页(douyin.com/user/…)。</div>
+    <div id="profile-card">
+      <div class="row"><span class="label">用户名</span><span id="p-nickname" class="value">—</span></div>
+      <div class="row"><span class="label">抖音号</span><span id="p-uid" class="value">—</span></div>
+      <div class="row"><span class="label">sec_uid</span><span id="p-secuid" class="value mono" title=""></span></div>
+      <div class="row"><span class="label">状态</span><span id="p-status" class="badge">—</span></div>
+      <div class="row" id="p-detail-row" hidden><span class="label">详情</span><span id="p-detail" class="value muted"></span></div>
+      <button id="btn-enqueue" class="primary">加入队列</button>
+      <button id="btn-fetch-all" class="primary">抓取全部作品</button>
+      <button id="btn-retry-profile" hidden>重试该主页失败项</button>
+      <div id="fetch-progress" class="muted" hidden></div>
+    </div>
+    <div id="work-card" hidden>
+      <h2>当前作品</h2>
+      <div class="row"><span class="label">作品ID</span><span id="w-aweme" class="value mono"></span></div>
+      <button id="btn-enqueue-work" class="primary">补录该作品</button>
+      <div class="muted">用于列表接口被过滤的作品(详情可达但主页看不到)。</div>
+    </div>
+  </section>
+
+  <!-- 批量导入 -->
+  <section class="box">
+    <h2>批量导入主页</h2>
+    <button id="btn-update-all" class="primary">更新全部已登记主页</button>
+    <div id="update-progress" class="muted"></div>
+    <textarea id="batch-input" rows="5"
+      placeholder="每行一个主页链接或 sec_uid&#10;补录作品请用详情页的「补录该作品」"></textarea>
+    <button id="btn-batch" class="primary">批量入队</button>
+    <div id="batch-results" class="results"></div>
+  </section>
+
+  <!-- 队列状态 -->
+  <section class="box">
+    <h2>队列 <span id="queue-count" class="muted"></span></h2>
+    <div id="queue-current" class="muted" hidden></div>
+    <ul id="queue-list"></ul>
+    <div id="queue-recent" class="muted"></div>
+    <button id="btn-retry-all" hidden>重试全部失败项</button>
+    <div id="retry-results" class="results"></div>
+  </section>
+
+  <footer class="muted">
+    下载在本机串行执行;成功提取过的作品自动跳过。
+  </footer>
+
+  <script src="popup.js"></script>
+</body>
+</html>

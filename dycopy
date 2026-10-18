@@ -1,0 +1,16 @@
+#!/bin/bash
+# dycopy — 抖音视频文案提取器 (wrapper)
+# 清理宿主注入的 PYTHONPATH，并设置默认模型镜像。
+SOURCE="${BASH_SOURCE[0]}"
+while [ -L "$SOURCE" ]; do
+  TARGET="$(readlink "$SOURCE")"
+  case "$TARGET" in
+    /*) SOURCE="$TARGET" ;;
+    *) SOURCE="$(dirname "$SOURCE")/$TARGET" ;;
+  esac
+done
+DIR="$(cd -P "$(dirname "$SOURCE")" && pwd)"
+export HF_ENDPOINT="${HF_ENDPOINT:-https://hf-mirror.com}"
+PYBIN="$DIR/.venv/bin/python"
+[ -x "$PYBIN" ] || PYBIN="$DIR/.venv/Scripts/python.exe"   # Windows venv
+exec env -u PYTHONPATH "$PYBIN" "$DIR/dycopy.py" "$@"
